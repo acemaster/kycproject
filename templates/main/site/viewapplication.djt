@@ -1,0 +1,51 @@
+{% extends "main/layouts/base.djt" %}
+{% load staticfiles %}
+
+{%block content%}
+
+<div class="ui container">
+	<div class="ui grid">
+		<br>
+		<a href="/main/viewuser/{{profileid}}" class="ui fluid primary button">Back to View User</a>
+		<h1 class="ui row header">View Identification Document of {{doc.user.first_name}}</h1>
+
+		<div class="ui row divider"></div>
+		<div class="row">
+			<a href="{{doc.identification_doc.url}}" class="ui fluid yellow button"> View User Application</a>
+			<br>
+			<form class="ui form" style="width: 100%;" action="/main/viewapplication/{{doc.id}}" method="POST" enctype="multipart/form-data">
+					{%csrf_token%}
+					<div class="field">
+					    <label>Reason to Move</label>
+					    <input type="text" name="rtomove" value="{{doc.reason_to_move}}">
+					</div>
+					<div class="field">
+					    <label>Reason to Reject</label>
+					    <input type="text" name="rtoreject" value="{{doc.reason_to_reject}}">
+					</div>
+					<div class="field">
+					    <label>Applicant Score</label>
+					    <input type="text" name="score" value="{{doc.applicant_score}}">
+					</div>
+					<div class="field">
+					    <label>Status</label>
+					   	<select id="select" name="status">
+					   		<option value="Accepted">Accepted</option>
+					   		<option value="Rejected">Rejected</option>
+					   		<option value="Waiting">Waiting</option>	
+					   	</select>
+					</div>
+				<button class="ui fluid green button" type="submit">Submit</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+{%endblock%}
+{% block scripts %}
+    <script type="text/javascript">
+    	$('#select')
+  .dropdown()
+;
+    </script>
+{% endblock %}

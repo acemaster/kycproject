@@ -1,0 +1,23 @@
+{% extends "main/layouts/base.djt" %}
+{% load staticfiles %}
+
+{%block content%}
+
+<div class="ui container">
+	<div class="ui grid">
+		<h1 class="ui row header">Welcome to Identification Document Upload</h1>
+		<div class="ui row divider"></div>
+		<div class="row">
+			<form class="ui form" style="width: 100%;" action="/main/uploadprints/" method="POST" enctype="multipart/form-data">
+					{%csrf_token%}
+					<div class="field">
+					    <label>Identification File</label>
+					    <input type="file" name="identificationdoc">
+					</div>
+				<button class="ui fluid green button" type="submit">Submit</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+{%endblock%}

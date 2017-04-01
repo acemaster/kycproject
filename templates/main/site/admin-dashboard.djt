@@ -1,0 +1,110 @@
+{% extends "main/layouts/base.djt" %}
+{% load staticfiles %}
+
+{%block content%}
+
+<div class="ui container">
+	<div class="ui grid">
+		<div class="six wide column">
+			<canvas id="myChart" width="100%" height="100%"></canvas>
+		</div>
+		<div class="ten wide column">
+		 	 <div class="ui pointing menu">
+				  <a class="active item tabitem" data-target="users">
+				    Users
+				  </a>
+				  <a class="item tabitem" data-target="applications">
+				    Applications
+				  </a>
+			</div>
+			<div class="ui segment tabcontent" id="users">
+				{%if users%}
+				<table class="ui fluid celled padded table">
+					<thead>
+					    <tr>
+						    <th>Id</th>
+						    <th>Name</th>
+						    <th>Email Id</th>
+						    <th>View/Edit Info</th>
+					  	</tr>
+					</thead>
+					{% for p in users %}
+						<tr>
+							<td>{{p.id}}</td>
+							<td>{{p.user.first_name}}</td>
+							<td>{{p.user.email}}</td>
+							<td><a href="/main/viewuser/{{p.id}}" class="ui fluid button yellow">View/Edit</a></td>
+						</tr> 
+					{% endfor %}
+				</table>
+				{%else%}
+					<h2>No Users</h2>
+				{%endif%}
+			</div>
+			<div class="ui segment tabcontent" id="applications">
+				{%if applications%}
+				<table class="ui fluid celled padded table">
+					<thead>
+					    <tr>
+						    <th>Id</th>
+						    <th>Name</th>
+						    <th>Email Id</th>
+						    <th>Accept/Reject Application</th>
+					  	</tr>
+					</thead>
+					{% for p in applications %}
+						<tr>
+							<td>{{p.id}}</td>
+							<td>{{p.user.first_name}}</td>
+							<td>{{p.user.email}}</td>
+							<td><a href="/main/viewapplication/{{p.id}}" class="ui fluid button yellow">Accept/Reject Application</a></td>
+						</tr> 
+					{% endfor %}
+				</table>
+				{%else%}
+					<h2>No Users</h2>
+				{%endif%}
+			</div>
+		</div>
+	</div>
+{%endblock%}
+{%block scripts%}
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#applications').hide();
+	});
+
+	$('.item').click(function(){
+		$('.tabitem').removeClass('active');
+		$('.tabcontent').hide();
+		$(this).addClass('active');
+		$('#'+$(this).attr('data-target')).show();
+	});
+	var data = {
+    labels: [
+        "Accepted",
+        "Rejecting",
+        "Waiting"
+    ],
+    datasets: [
+        {
+            data: [{{accepted}}, {{rejected}}, {{waiting}}],
+            backgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+            ],
+            hoverBackgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+            ]
+        }]
+};
+var ctx = $("#myChart");
+	var myPieChart = new Chart(ctx,{
+    type: 'pie',
+    data: data,
+	});
+</script>
+{%endblock%}

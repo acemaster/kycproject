@@ -1,0 +1,35 @@
+{% extends "main/layouts/base.djt" %}
+{% load staticfiles %}
+
+{%block content%}
+
+<div class="ui container">
+	<div class="ui grid">
+		<div class="two wide column">
+			
+		</div>
+		<div class="twelve wide column">
+			<a href="/main/uploadprints/" class="ui green fluid button">Add Identification document</a>
+			<div class="ui divider"></div>
+			<br>
+			{%if docs%}
+			<table class="ui fluid celled padded table">
+				<thead>
+				    <tr>
+					    <th>Id</th>
+					    <th>Get Print</th>
+				  	</tr>
+				</thead>
+				{% for p in docs %}
+					<tr>
+						<td>{{p.id}}</td>
+						<td><a href="{{p.blueprint.url}}" class="ui fluid button {%if p.is_accepted == 0 %}yellow{%elif p.is_accepted == 1 %}green{%else%}red{%endif%}">{%if p.is_accepted == 0 %}Waiting for acceptance{%elif p.is_accepted == 1 %}Accepted{%else%}Rejected{%endif%}</a></td>
+					</tr> 
+				{% endfor %}
+			</table>
+			{%else%}
+				<h2>No Identification uploaded</h2>
+			{%endif%}
+		</div>
+	</div>
+{%endblock%}

@@ -1,0 +1,46 @@
+{% extends "main/layouts/base.djt" %}
+{% load staticfiles %}
+
+{%block content%}
+
+<div class="ui container">
+
+	{% if message %}
+	<div class="ui positive message" id="message">
+		<i class="close icon"></i>
+		<div class="header">
+		  
+		</div>
+		<div>
+		  <p>{{message}}</p>
+		</div>
+	</div>
+	{% endif %}
+
+	<div class="ui grid">
+		<div class="four wide column"></div>
+		<div class="eight wide column">
+			<div class="ui fluid segment">
+				<form class="ui form" action="/main/signin/" method="post">
+					{% csrf_token %}
+			        <div class="field">
+			              <label>UserName</label>
+			              <input name="username" placeholder="Username" type="text" id="username" required>
+			        </div>
+			        <div class="field">
+			              <label>Password</label>
+			              <input name="password" placeholder="Password" type="password" id="password" required>
+			        </div>
+			        <br>
+			        	<button class="ui fluid button green" type="submit" id="login">Login</button>
+			        </form>
+				<br>
+				<a href="/main/signup/"><button class="ui fluid button grey">Signup</button></a>
+			</div>
+
+		</div>
+		<div class="four wide column"></div>
+	</div>
+	
+</div>
+{% endblock %}

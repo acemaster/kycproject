@@ -1,0 +1,113 @@
+{% extends "main/layouts/base.djt" %}
+{% load staticfiles %}
+
+{%block content%}
+
+<div class="ui container">
+
+	{% if message %}
+	<div class="ui negative message" id="message">
+		<i class="close icon"></i>
+		<div class="header">
+		  
+		</div>
+		<div>
+		  <p>{{message}}</p>
+		</div>
+	</div>
+	{% endif %}
+		<form class="ui form" action="/main/signup/" method="POST">
+		<div class="ui grid">
+			{% csrf_token %}
+			<div class="two wide column"></div> 
+			<div class="six wide column">
+				<div class="ui fluid segment">
+						<div class="field">
+				              <label>First Name</label>
+				              <input name="firstname" placeholder="FirstName" type="text" id="firstname" required>
+				        </div>
+				        <div class="field">
+				              <label>Last Name</label>
+				              <input name="lastname" placeholder="LastName" type="text" id="lastname" required>
+				        </div>
+				        <div class="field">
+				              <label>Email-id</label>
+				              <input name="email" placeholder="Email-id" type="text" id="email" required>
+				        </div>
+				        <div class="field">
+				              <label>Password</label>
+				              <input name="password" placeholder="Password" type="password" id="password" required>
+				        </div>
+				        <div class="field">
+				              <label>Confirm-Password</label>
+				              <input name="confirm_password" placeholder="ConfirmPassword" type="password" id="confirm_password" required>
+				        </div>
+				        <div class="field">
+				              <label>Phone</label>
+				              <input name="phone" placeholder="xxxxxxxxxx" type="text" id="phone" required>
+				        </div>
+				        <div class="field">
+				              <label>Father's Name</label>
+				              <input name="fname" placeholder="Father's Name" type="text" id="fname" required>
+				        </div>
+				</div>
+			</div>
+			<div class="six wide column">
+				<div class="ui fluid segment">
+				        <div class="field">
+				              <label>Country</label>
+				              <input name="country" placeholder="Eg: India" type="text" id="country" required>
+				        </div>
+				        <div class="field">
+				              <label>Address</label>
+				              <textarea name="address"></textarea>
+				        </div>
+				        <div class="ui fluid field calendar dob">
+					        <label >Date of Birth</label>
+					        <div class="ui fluid input left icon">
+					          <i class="calendar icon"></i>
+					          <input type="text" placeholder="Date Of Birth" name="dob" required>
+					        </div>
+					    </div>
+					    <div class="field">
+				              <label>Native Language</label>
+				              <input name="native_lang" placeholder="Eg: Hindi" type="text" id="native_lang" required>
+				        </div>
+				        <div class="field">
+				              <label>Other Languages</label>
+				              <input name="lang" placeholder="Eg: Malayalam" type="text" id="lang" required>
+				        </div>
+
+				</div>
+			</div>
+			<div class="two wide column"> </div>
+			<button class="ui fluid button green" type="submit" id="signup">Signup</button>
+		</div>
+		</form>
+
+</div>
+
+{% endblock %}
+{%block scripts%}
+<script type="text/javascript">
+$('.dob').calendar({
+    type: 'date',
+    formatter: {
+    date: function (date, settings) {
+      if (!date) return '';
+      var yyyy = date.getFullYear().toString();
+      var mm = (date.getMonth()+1).toString();
+      var dd  = date.getDate().toString();
+       
+      // CONVERT mm AND dd INTO chars
+      var mmChars = mm.split('');
+      var ddChars = dd.split('');
+       
+      // CONCAT THE STRINGS IN YYYY-MM-DD FORMAT
+      var datestring = yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
+      return datestring;
+    }
+  }
+  });
+</script>
+{%endblock%}

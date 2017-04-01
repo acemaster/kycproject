@@ -1,0 +1,51 @@
+{% load staticfiles %}
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>KYC Project</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        {# <link rel="apple-touch-icon" href="apple-touch-icon.png"> #}
+
+        <link rel="stylesheet" href="{% static 'semantic/semantic.min.css' %}">
+         <script src="{% static 'jquery-3.1.1.min.js' %}"></script>
+         
+        <!--<link rel="stylesheet" href="css/main.css"> -->
+    </head>
+    <body>
+        <div class="ui inverted segment">
+          <div class="ui inverted secondary pointing menu">
+            <a href="/main/" class="active item">
+              KYC Project
+            </a>
+            <div class="right menu">
+            {% if request.user.is_authenticated %}
+            <a href="/main/dashboard/" class="item">
+                Dashboard
+            </a>
+            <a href="/main/signout/" class="item">
+                Logout
+            </a>
+            {% else %}
+            <a href="/main/signin/" class="item">
+              Login
+            </a>
+            {% endif %}
+            </div>
+          </div>
+        </div>
+    	{%block content%}
+    	{%endblock%}
+       
+        <script src="{% static 'semantic/semantic.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'calendar/calendar.min.js' %}"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+       
+        {%block scripts%}
+        {%endblock%}
+    </body>
+</html>

@@ -1,0 +1,119 @@
+{% extends "main/layouts/base.djt" %}
+{% load staticfiles %}
+
+{%block content%}
+
+<div class="ui container">
+
+	{% if message %}
+	<div class="ui negative message" id="message">
+		<i class="close icon"></i>
+		<div class="header">
+		  
+		</div>
+		<div>
+		  <p>{{message}}</p>
+		</div>
+	</div>
+	{% endif %}
+		<form class="ui form" action="/main/viewuser/{{profile.id}}" method="POST">
+		<div class="ui grid">
+			{% csrf_token %}
+			<div class="two wide column"></div> 
+			<div class="six wide column">
+				<div class="ui fluid segment">
+						<div class="field">
+				              <label>First Name</label>
+				              <input name="firstname" placeholder="FirstName" type="text" value="{{profile.user.first_name}}" id="firstname" required>
+				        </div>
+				        <div class="field">
+				              <label>Last Name</label>
+				              <input name="lastname" value="{{profile.user.last_name}}" placeholder="LastName" type="text" id="lastname" required>
+				        </div>
+				        <div class="disabled field">
+				              <label>Email-id</label>
+				              <input name="email" value="{{profile.user.email}}" placeholder="Email-id" type="text" id="email" required>
+				        </div>
+				        <div class="field">
+				              <label>Phone</label>
+				              <input name="phone" value="{{profile.phone}}" placeholder="xxxxxxxxxx" type="text" id="phone" required>
+				        </div>
+				        <div class="field">
+				              <label>Father's Name</label>
+				              <input name="fname" value="{{profile.father_name}}" placeholder="Father's Name" type="text" id="fname" required>
+				        </div>
+				</div>
+			</div>
+			<div class="six wide column">
+				<div class="ui fluid segment">
+				        <div class="field">
+				              <label>Country</label>
+				              <input name="country" value="{{profile.country}}" placeholder="Eg: India" type="text" id="country" required>
+				        </div>
+				        <div class="field">
+				              <label>Address</label>
+				              <textarea name="address">{{profile.address}}</textarea>
+				        </div>
+					    <div class="field">
+				              <label>Native Language</label>
+				              <input name="native_lang" value="{{profile.native_lang}}" placeholder="Eg: Hindi" type="text" id="native_lang" required>
+				        </div>
+				        <div class="field">
+				              <label>Other Languages</label>
+				              <input name="lang" value="{{profile.lang}}" placeholder="Eg: Malayalam" type="text" id="lang" required>
+				        </div>
+
+				</div>
+			</div>
+			<div class="two wide column"> </div>
+			<button class="ui fluid button green" type="submit" id="signup">Update Profile</button>
+		</div>
+		</form>
+
+		<div class="ui segment">
+			{%if docs%}
+			<table class="ui fluid celled padded table">
+				<thead>
+				    <tr>
+					    <th>Id</th>
+					    <th>Get Print</th>
+				  	</tr>
+				</thead>
+				{% for p in docs %}
+					<tr>
+						<td>{{p.id}}</td>
+						<td><a href="/main/viewapplication/{{p.id}}" class="ui fluid button {%if p.is_accepted == 0 %}yellow{%elif p.is_accepted == 1 %}green{%else%}red{%endif%}">{%if p.is_accepted == 0 %}View Application{%elif p.is_accepted == 1 %}Accepted{%else%}Rejected{%endif%}</a></td>
+					</tr> 
+				{% endfor %}
+			</table>
+			{%else%}
+				<h2>No Identification uploaded</h2>
+			{%endif%}
+		</div>
+
+</div>
+
+{% endblock %}
+{%block scripts%}
+<script type="text/javascript">
+$('.dob').calendar({
+    type: 'date',
+    formatter: {
+    date: function (date, settings) {
+      if (!date) return '';
+      var yyyy = date.getFullYear().toString();
+      var mm = (date.getMonth()+1).toString();
+      var dd  = date.getDate().toString();
+       
+      // CONVERT mm AND dd INTO chars
+      var mmChars = mm.split('');
+      var ddChars = dd.split('');
+       
+      // CONCAT THE STRINGS IN YYYY-MM-DD FORMAT
+      var datestring = yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
+      return datestring;
+    }
+  }
+  });
+</script>
+{%endblock%}
